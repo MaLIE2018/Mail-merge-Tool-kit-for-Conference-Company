@@ -1,0 +1,33 @@
+Private Sub GetCategoryNames()
+    Dim oStores As Outlook.Stores
+    Dim oStore As Outlook.Store
+    Dim oCategories As Outlook.Categories
+    Dim oCategory As Outlook.Category
+    Dim strOutput As String
+    
+    Set oStores = Application.Session.Stores
+ 
+    For Each oStore In oStores
+        Set oCategories = oStore.Categories
+
+        If oCategories.Count > 0 Then
+        For Each oCategory In oCategories
+            strOutput = strOutput & "Category Name: """ & oCategory.Name & """, " _
+            & oCategory.Color & ", " & oCategory.ShortcutKey & vbCrLf
+        Next
+        End If
+     
+        strOutput = oStore.DisplayName & vbCrLf _
+        & "--------------Categories-----------------" & vbCrLf _
+        & strOutput
+        MsgBox strOutput
+        strOutput = ""
+
+    Next
+
+ Set oStores = Nothing
+ Set oStore = Nothing
+ Set oCategories = Nothing
+ Set oCategory = Nothing
+ 
+End Sub
