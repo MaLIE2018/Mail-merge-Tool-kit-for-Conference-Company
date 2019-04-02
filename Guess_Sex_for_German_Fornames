@@ -1,0 +1,76 @@
+Public Function CheckFornameSex(Forname As String) As String
+
+'Function: Is the name Female or mail
+
+    Dim CheckGirl As Integer
+    Dim CheckBoy As Variant
+    Dim CheckBoy2 As Variant
+    Dim ExtraNames As Variant
+    Dim i As Integer
+    Dim arr1(), arr2(), arr3(), arr4(), arr5(), arr6(), arr7(), arr8(), arr9(), arr10(), arr11(), arr12() As Variant
+    
+    Dim NameFracments() As Variant
+    
+    CheckBoy = 0
+    CheckBoy2 = 0
+    CheckGirl = 0
+    
+    On Error GoTo Errorhandler
+    'ExtraNames
+    arr1 = Array("Alex", "Alexis", "Andrea", "Auguste", "Carol", "Chris", "Conny", "Dominique", "Eike", "Folke", "Francis", "Friedel", "Gabriele", "Gerke", "Gerrit", "Heilwig", "Jean", "Kay", "Kersten", "Kim", "Kimberly", "Leslie", "Luca", "Lucca", "Luka", "Maris", "Maxime", "Nicki", "Nicola", "Nikola", "Sandy", "Sascha", "Toni", "Winnie")
+    'CheckGirl
+    arr2 = Array("a", "e", "i", "n", "u", "y")
+    arr3 = Array("ah", "al", "bs", "dl", "el", "et", "id", "il", "it", "ll", "th", "ud", "uk")
+    arr4 = Array("ann", "ary", "aut", "des", "een", "eig", "eos", "ett", "fer", "got", "ies", "iki", "ild", "ind", "itt", "jam", "joy", "kim", "lar", "len", "lis", "men", "mor", "oan", "ope", "ous", "ppe", "ren", "res", "rix", "san", "sey", "sis", "tas", "udy", "urg", "vig")
+    arr5 = Array("ahel", "ardi", "atie", "borg", "cole", "endy", "gard", "gart", "gnes", "gund", "iede", "indy", "ines", "iris", "ison", "istl", "ldie", "lilo", "loni", "lott", "lynn", "mber", "moni", "nken", "oldy", "riam", "riet", "rill", "roni", "smin", "ster", "uste", "vien")
+    arr6 = Array("achel", "agmar", "almut", "Candy", "Doris", "echen", "edwig", "gerti", "irene", "mandy")
+    'CheckBoy2
+    arr7 = Array("abel", "akim", "amie", "ammy", "atti", "bela", "didi", "dres", "eith", "elin", "emia", "erin", "ffer", "frid", "gary", "gene", "glen", "hane", "hann", "hein", "idel", "iete", "irin", "kind", "kita", "kola", "lion", "levi", "mann", "mika", "mike", "muth", "naud", "neth", "nnie", "ntin", "nuth", "olli", "ommy", "onah", "önke", "ören", "pete", "rene", "ries", "rlin", "rome", "rren", "rtin", "ssan", "stas", "tell", "teve", "tila", "tony", "tore", "uele")
+    arr8 = Array("astel", "benny", "billy", "billi", "brosi", "elice", "ianni", "laude", "lenny", "danny", "colin", "dolin", "ormen", "pille", "ronny", "urice", "ustel", "ustin", "willi", "willy")
+    arr9 = Array("jascha", "tienne", "urence", "vester")
+    arr10 = Array("Patrice")
+    'checkBoy
+    arr11 = Array("ai", "an", "ay", "dy", "en", "eu", "ey", "fa", "gi", "hn", "iy", "ki", "nn", "oy", "pe", "ri", "ry", "ua", "uy", "we", "zy")
+    arr12 = Array("ael", "ali", "aid", "ain", "are", "ave", "bal", "bby", "bin", "cal", "cel", "cil", "cin", "die", "don", "dre", "ede", "edi", "eil", "eit", "emy", "eon", "gon", "gun", "hal", "hel", "hil", "hka", "iel", "iet", "ill", "ini", "kie", "lge", "lon", "lte", "lja", "mal", "met", "mil", "min", "mon", "mre", "mud", "muk", "nid", "nsi", "oah", "obi", "oel", "örn", "ole", "oni", "oly", "phe", "pit", "rcy", "rdi", "rel", "rge", "rka", "rly", "ron", "rne", "rre", "rti", "sil", "son", "sse", "ste", "tie", "ton", "uce", "udi", "uel", "uli", "uke", "vel", "vid", "vin", "wel", "win", "xei", "xel")
+    
+    
+    NameFracments = Array(arr2, arr3, arr4, arr5, arr6, arr7, arr8, arr9, arr10, arr11, arr12)
+    
+    ExtraNames = IsNumeric(Application.Match(Forname, arr1, 0)) * -1
+
+    For i = 0 To 4
+        If IsInArray(Right(Forname, i + 1), NameFracments(i)) = True Then
+            CheckGirl = CheckGirl + 1
+        End If
+    Next
+    For i = 0 To 3
+        If IsInArray(Right(Forname, i + 4), NameFracments(i + 5)) = True Then
+            CheckBoy2 = CheckBoy2 - 1
+            Exit For
+        End If
+    Next
+    For i = 0 To 1
+        If IsInArray(Right(Forname, i + 2), NameFracments(i + 9)) = True Then
+            CheckBoy = CheckBoy - 1
+            Exit For
+        End If
+    Next
+ 
+    CheckBoy = CheckBoy + CheckBoy2
+    CheckGirl = CheckGirl + CheckBoy
+    
+    
+    If ExtraNames = 1 And CheckGirl = 1 Then
+        CheckFornameSex = "Check(f)"
+    ElseIf ExtraNames = 1 And CheckBoy = 1 Then
+        CheckFornameSex = "Check(m)"
+    ElseIf CheckGirl = 1 Then
+        CheckFornameSex = "f"
+    Else
+        CheckFornameSex = "m"
+    End If
+    
+Errorhandler:
+    Err.Clear
+                
+End Function
