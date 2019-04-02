@@ -1,0 +1,48 @@
+Public Function GetSig() As String
+    
+    Dim Signature As String
+    
+    Signature = Environ("appdata") & "\Microsoft\Signatures\"
+    If Dir(Signature, vbDirectory) <> vbNullString Then Signature = Signature & Dir$(Signature & "*.htm") Else Signature = ""
+    
+    GetSig = CreateObject("Scripting.FileSystemObject").GetFile(Signature).OpenAsTextStream(1, -2).ReadAll
+    
+End Function
+
+
+Public Function PrepareSigforSending() As String
+
+   Dim oFSO As Object
+   Dim oFolder As Object
+   Dim oSubFolder As Object
+   Dim oFile As Object
+   Dim i As Integer
+   Dim sPath As String
+   Dim Result As String
+  
+   'Call FUnction GetSig
+   Result = GetSig
+   
+   sPath = Environ("appdata") & "\Microsoft\Signatures"
+   
+   
+   Set oFSO = CreateObject("Scripting.FileSystemObject")
+   Set oFolder = oFSO.GetFolder(sPath)
+    
+
+        For Each oSubFolder In oFolder.subfolders
+             For Each oFile In oSubFolder.Files
+                   Result = Replace(Result, GetFolderName(oSubFolder.path) & "/" & oFile.Name, oSubFolder.path & "\" & oFile.Name)
+             Next oFile
+         
+         Next oSubFolder
+   
+     
+     Set oFSO = Nothing
+     Set oFile = Nothing
+     Set oFolder = Nothing
+     Set oSubFolder = Nothing
+     
+     PrepareSigforSending = Result
+     
+End Function
