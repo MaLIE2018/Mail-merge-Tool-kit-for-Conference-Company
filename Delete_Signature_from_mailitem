@@ -1,0 +1,20 @@
+Sub DeleteSig(msg As Outlook.MailItem)
+   
+    Dim objDoc As Word.Document
+    Dim objBkm As Word.Bookmark
+    
+    On Error Resume Next
+    Set objDoc = msg.GetInspector.WordEditor
+    Set objBkm = objDoc.bookmarks("_MailAutoSig")
+    If Not objBkm Is Nothing Then
+        objBkm.Select
+        objDoc.Windows(1).Selection.Previous(wdParagraph, 1).Delete
+        objBkm.Select
+        objDoc.Windows(1).Selection.Next(wdParagraph, 1).Delete
+        objDoc.Windows(1).Selection.Delete
+    End If
+    
+    Set objDoc = Nothing
+    Set objBkm = Nothing
+    
+End Sub
