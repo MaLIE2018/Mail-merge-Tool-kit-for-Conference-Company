@@ -1,0 +1,19 @@
+FolderSetup
+
+Mainfoldername Templates&Forms
+
+SubFolders
+!ENG_Templates
+!GER_Templates
+Allow FirstInstance
+Allow SecondInstance
+Anmeldeformular
+Backup&Statistics
+Conferences
+Documentation Form
+Dokumentationbestellung
+Registration Form
+
+# 1 Setup
+Go to Tab mail merge and click on general setup
+Select the mainfolder from above
