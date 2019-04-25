@@ -1,0 +1,94 @@
+Sub Datum()
+
+'Bar = Worksheets("DataConferences").Cells(3, 8).Value: Debug.Print CDate(Right(Bar, 4) & "-" & _
+    'Left(Bar, 2) & "-" & Mid(Bar, 3, 2))
+     '"08.05.2019"
+    Dim day, month, year, Eingabe As String
+    Dim StartMonth As Integer
+    Dim Dat As Date
+    Dim LängeEingabe As Integer
+    Dim i As Integer
+    
+    Eingabe = "16/18/33"
+    
+    LängeEingabe = Len(Eingabe)
+    
+    Debug.Print "Input: " & Eingabe & " " & Len(Eingabe)
+    
+    year = Left(Eingabe, 4)
+    day = Left(Eingabe, 2)
+    StartMonth = 4
+    month = Mid(Eingabe, StartMonth, 2)
+      
+    If (InStr(1, year, Chr(46)) > 0 Or InStr(1, year, Chr(45)) > 0 Or InStr(1, year, Chr(47)) > 0) Then
+        year = Left(Eingabe, 2)
+    End If
+    
+    
+    If LängeEingabe = 10 Then
+      If (InStr(1, year, Chr(46)) > 0 Or InStr(1, year, Chr(45)) > 0 Or InStr(1, year, Chr(47)) > 0) Then
+        year = Left(Eingabe, 2)
+      End If
+      
+    ElseIf LängeEingabe = 10 Then
+      If (InStr(1, year, Chr(46)) > 0 Or InStr(1, year, Chr(45)) > 0 Or InStr(1, year, Chr(47)) > 0) Then
+             year = Right(Eingabe, 2)
+        ElseIf Len(Eingabe) < 8 Then
+            year = Left(Eingabe, 2)
+        End If
+    End If
+    
+    If Len(Eingabe) = 12 Then
+            StartMonth = 4
+    ElseIf Len(Eingabe) = 10 Then
+            StartMonth = 3
+    ElseIf Len(Eingabe) = 8 Then
+            StartMonth = 4
+    ElseIf Len(Eingabe) = 6 Then
+            StartMonth = 4
+    End If
+    
+    If (InStr(1, year, Chr(46)) > 0 Or InStr(1, year, Chr(45)) > 0 Or InStr(1, year, Chr(47)) > 0) Then
+        year = Left(Eingabe, 4)
+    End If
+
+    
+    
+   
+    
+    day = Left(Eingabe, 2)
+    year = Right(Eingabe, 4)
+    month = Mid(Eingabe, StartMonth, 2)
+    
+    
+    
+    
+  'German
+    
+    day = Left(Eingabe, 2)
+    year = Right(Eingabe, 4)
+    
+    
+    
+    day = Right(Eingabe, 2)
+    
+    
+    If Len(Eingabe) = 12 And StartMonth <> 6 Then
+        StartMonth = 4
+    ElseIf Len(Eingabe) = 10 And StartMonth <> 6 Then
+        StartMonth = 3
+    ElseIf Len(Eingabe) = 8 And StartMonth <> 6 Then
+        StartMonth = 4
+    End If
+    
+    
+
+    If month > 12 Then
+        day = Mid(Eingabe, StartMonth, 2)
+        month = Left(Eingabe, 2)
+    End If
+        
+    Dat = DateSerial(year, month, day)
+    
+Debug.Print "Output: " & Dat
+End Sub
